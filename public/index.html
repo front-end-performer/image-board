@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Image Boarder</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/plasticine/2x/image.png" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500i,600,600i,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css" >
+</head>
+<body>
+    <section id="main">
+                <!-- Component -->
+                <transition name="bounce">
+                    <first-component 
+                        :selected-image="selectedImage" 
+                        v-if="selectedImage"
+                        @close="cleanHash"
+                        @set="updateImgRow">
+                    </first-component>
+                </transition>
+                <!-- /Component -->
+        <header>
+            <div class="header__container">
+                <img class="header__icon" src="./image.png" alt="icon" />
+                <input class="inputs" v-model="title" name="title" placeholder="title" required />
+                <input class="inputs" v-model="description" name="description" placeholder="description" required />
+                <input class="inputs" v-model="username" name="username" placeholder="username" />
+                <input class="file-input" type="file" accept="image/*"  @change="fileselected"/>
+                <button class="btn upload"  @submit="checkForm" @click="upload">upload 📥</button>
+                
+                <span v-if="errors.length" v-for="error in errors" class="error">{{error}}</span>
+            </div>
+                <h1>{{header}}</h1>
+                <h3>latest images ...</h3>
+                <span class="line_bold"></span>
+        </header>
+        <div class="container">
+            <div @click="selectedImage = image.id"  class="container__img" v-for="image in imagesArr">
+                <a :href="'#' + image.id">
+                <img :class="className" :src="image.url" alt="img" />
+                </a>
+                <p class="image_title">{{image.title}}</p>
+            </div>
+        </div>
+        <button class="btn moreBtn" id="moreBtn" @click="moreImages" v-if="showBtn && imagesArr.length >= 3">more images</button>
+    </section>
+    
+    <script type="text/x-template" id="template">
+        <div class="first-component">
+            <img @click="closeModal" class="close_icon" src="./close.ico" alt="close icon" />        
+            <div class="first-component_content">
+                <h1>title: {{imagesData.title}}</h1>
+                <span class="line_bold"></span>
+                <div class="first-component_img">
+                    <img class="modal_image" :src="imagesData.url" alt="img" />
+                    <div class="first-component_img-content">
+                    <p><b>username:</b> {{imagesData.username}}!</p>
+                    <p><b>description:</b> {{imagesData.description}}</p>
+                    <button @click="deleteImgEvent" class="btn delete_btn">DELETE</button>
+                    </div>
+                </div>
+                <h3>share your comment</h3>
+                <textarea rows="4" cols="50" class="inputs modal_input" v-model="comment"     name="comment" placeholder="comment"></textarea>
+                <input class="inputs modal_input" v-model="username" name="username"     placeholder="username" required />
+                <button class="btn submit" @click="submit">submit</button>
+            </div>
+            <div class="comments" >
+                <div class="comments_content" v-for="comment in userComments">
+                <p><b>username:</b> {{comment.username}}</p>
+                <p><b>your comment:</b> {{comment.comment}}</p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script> 
+
+</body>
+</html>
