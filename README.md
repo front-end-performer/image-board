@@ -7,7 +7,7 @@ HTML, CSS, JavaScript, Vue.js, AWS3, Multer, Node.js with Express.js, Postgres S
 
 ## Visuals
 *
-<img src="https://j.gifs.com/4QKg2V.gif" />
+<img src="https://j.gifs.com/91XnjB.gif" />
 *
 <img src="https://j.gifs.com/wVgPy1.gif" />
 
